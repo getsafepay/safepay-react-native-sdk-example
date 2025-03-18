@@ -1,21 +1,20 @@
-import React, { useContext } from "react";
-import { View, Text, TextInput, Button, StyleSheet, ScrollView } from "react-native";
-import { useForm, Controller } from "react-hook-form";
-import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { SafepayContext } from "@sfpy/react-native";
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
+import { Button, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import * as Yup from "yup";
 
 type FormValues = {
     clientSecret: string;
     tracker: string;
     deviceDataCollectionJWT: string;
     deviceDataCollectionURL: string;
-    street_1: string;
-    street_2: string;
-    city: string;
-    state: string;
-    postal_code: string;
-    country: string;
+    street_1?: string | null;
+    street_2?: string | null;
+    city?: string | null;
+    state?: string | null;
+    postal_code?: string | null;
+    country?: string | null;
 };
 
 const schema = Yup.object().shape({
@@ -25,12 +24,12 @@ const schema = Yup.object().shape({
     deviceDataCollectionURL: Yup.string()
         .url("Must be a valid URL")
         .required("Device Data Collection URL is required"),
-    street_1: Yup.string().required("Street 1 is required"),
-    street_2: Yup.string().default(""),
-    city: Yup.string().required("City is required"),
-    state: Yup.string().default(""),
-    postal_code: Yup.string().required("Postal Code is required"),
-    country: Yup.string().required("Country is required"),
+    street_1: Yup.string().notRequired(),
+    street_2: Yup.string().notRequired(),
+    city: Yup.string().notRequired(),
+    state: Yup.string().notRequired(),
+    postal_code: Yup.string().notRequired(),
+    country: Yup.string().notRequired(),
 });
 
 export default function Form({ initialData, setValues }: { initialData: FormValues, setValues: (formValues: FormValues) => void }) {
@@ -151,7 +150,7 @@ export default function Form({ initialData, setValues }: { initialData: FormValu
                             style={styles.input}
                             onBlur={onBlur}
                             onChangeText={onChange}
-                            value={value}
+                            value={value || ""}
                             placeholder="Street 1"
                         />
                         {error && <Text style={styles.errorText}>{error.message}</Text>}
@@ -169,7 +168,7 @@ export default function Form({ initialData, setValues }: { initialData: FormValu
                             style={styles.input}
                             onBlur={onBlur}
                             onChangeText={onChange}
-                            value={value}
+                            value={value || ""}
                             placeholder="Street 2"
                         />
                         {error && <Text style={styles.errorText}>{error.message}</Text>}
@@ -187,7 +186,7 @@ export default function Form({ initialData, setValues }: { initialData: FormValu
                             style={styles.input}
                             onBlur={onBlur}
                             onChangeText={onChange}
-                            value={value}
+                            value={value || ""}
                             placeholder="City"
                         />
                         {error && <Text style={styles.errorText}>{error.message}</Text>}
@@ -205,7 +204,7 @@ export default function Form({ initialData, setValues }: { initialData: FormValu
                             style={styles.input}
                             onBlur={onBlur}
                             onChangeText={onChange}
-                            value={value}
+                            value={value || ""}
                             placeholder="State"
                         />
                         {error && <Text style={styles.errorText}>{error.message}</Text>}
@@ -223,7 +222,7 @@ export default function Form({ initialData, setValues }: { initialData: FormValu
                             style={styles.input}
                             onBlur={onBlur}
                             onChangeText={onChange}
-                            value={value}
+                            value={value || ""}
                             placeholder="Postal Code"
                         />
                         {error && <Text style={styles.errorText}>{error.message}</Text>}
@@ -241,7 +240,7 @@ export default function Form({ initialData, setValues }: { initialData: FormValu
                             style={styles.input}
                             onBlur={onBlur}
                             onChangeText={onChange}
-                            value={value}
+                            value={value || ""}
                             placeholder="Country"
                         />
                         {error && <Text style={styles.errorText}>{error.message}</Text>}

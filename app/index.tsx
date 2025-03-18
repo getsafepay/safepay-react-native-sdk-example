@@ -1,5 +1,5 @@
 import Form from "@/components/Form";
-import { SafepayContext } from "@sfpy/react-native";
+import { SafepayContext, SafepayContextType } from "@sfpy/react-native";
 import { useContext } from "react";
 import { View } from "react-native";
 
@@ -27,7 +27,7 @@ export default function Index() {
                     postal_code: safepayContext.postal_code,
                     country: safepayContext.country
                 }}
-                setValues={safepayContext.setValues}
+                setValues={values => safepayContext.setValues && safepayContext.setValues(values as SafepayContextType)}
             />
         </View>
     );

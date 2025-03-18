@@ -1,10 +1,10 @@
-import { SafepayContext, SafepayContextTypeWithoutSetter } from "@sfpy/react-native";
+import { SafepayContext, SafepayContextType } from "@sfpy/react-native";
 import { Stack, useRouter } from "expo-router";
 import * as React from "react";
 
 export default function RootLayout() {
 
-    const [values, setValues] = React.useState<SafepayContextTypeWithoutSetter>({
+    const [values, setValues] = React.useState<SafepayContextType>({
         clientSecret: "",
         tracker: "",
         deviceDataCollectionJWT: "",
@@ -23,11 +23,11 @@ export default function RootLayout() {
         if (!values.clientSecret || !values.tracker || !values.deviceDataCollectionJWT || !values.deviceDataCollectionURL || !values.street_1 || !values.city || !values.postal_code || !values.country) {
             return;
         }
-        router.replace("/authorization");
+        router.push("/authorization");
     }, [values]);
 
     return (
-        <SafepayContext.Provider value={{...values, setValues}}>
+        <SafepayContext.Provider value={{ ...values, setValues }}>
             <Stack>
                 <Stack.Screen
                     name="index"
