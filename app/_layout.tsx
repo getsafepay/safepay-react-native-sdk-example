@@ -39,6 +39,12 @@ export default function RootLayout() {
                         animation: "slide_from_bottom"
                     }}
                 />
+                <Stack.Screen
+                    name="card-capture"
+                    options={{
+                        title: "Card Capture Demo"
+                    }}
+                />
             </Stack>
         </SafepayContext.Provider>
     );

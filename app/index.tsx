@@ -1,7 +1,8 @@
 import Form from "@/components/Form";
 import { SafepayContext, SafepayContextType } from "@sfpy/react-native";
+import { Link } from "expo-router";
 import { useContext } from "react";
-import { View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 
 export default function Index() {
@@ -11,9 +12,24 @@ export default function Index() {
     return (
         <View
             style={{
-                flex: 1
+                flex: 1,
+                padding: 16,
+                gap: 16
             }}
         >
+            <View style={{ gap: 8 }}>
+                <Text style={{ fontSize: 18, fontWeight: "600" }}>Demos</Text>
+                <Link href="/authorization" asChild>
+                    <Pressable style={{ paddingVertical: 10 }}>
+                        <Text style={{ color: "#1f6feb" }}>Payer Authentication Demo</Text>
+                    </Pressable>
+                </Link>
+                <Link href="/card-capture" asChild>
+                    <Pressable style={{ paddingVertical: 10 }}>
+                        <Text style={{ color: "#1f6feb" }}>Card Capture Demo</Text>
+                    </Pressable>
+                </Link>
+            </View>
             <Form
                 initialData={{
                     clientSecret: safepayContext.clientSecret,
