@@ -24,6 +24,18 @@ extensions.configure(com.facebook.react.ReactSettingsExtension) { ex ->
 rootProject.name = 'safepay-react-native-sdk-example'
 
 dependencyResolutionManagement {
+  repositories {
+    google()
+    mavenCentral()
+    maven { url = uri("https://jitpack.io") }
+    maven {
+      url = uri("https://cardinalcommerceprod.jfrog.io/artifactory/android")
+      credentials {
+        username = System.getenv("CARDINAL_USERNAME") ?: ""
+        password = System.getenv("CARDINAL_PASSWORD") ?: ""
+      }
+    }
+  }
   versionCatalogs {
     libs {
       from(files(new File(rootDir, '../../safepay-android-sdk-getsafepay/gradle/libs.versions.toml')))
