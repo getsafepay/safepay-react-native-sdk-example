@@ -11,7 +11,9 @@ expo-env.d.ts
 
 # Native
 ios/
-android/
+android/**
+!android/
+!android/settings.gradle
 *.orig.*
 *.jks
 *.p8
