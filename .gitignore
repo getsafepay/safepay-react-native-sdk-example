@@ -10,8 +10,11 @@ web-build/
 expo-env.d.ts
 
 # Native
-android/
 ios/
+android/**
+!android/
+!android/settings.gradle
+!android/build.gradle
 *.orig.*
 *.jks
 *.p8
