@@ -1,5 +1,5 @@
 import { SafepayContext, SafepayContextType } from "@sfpy/react-native";
-import { Stack, useRouter } from "expo-router";
+import { Stack } from "expo-router";
 import * as React from "react";
 
 export default function RootLayout() {
@@ -8,7 +8,7 @@ export default function RootLayout() {
         clientSecret: "",
         tracker: "",
         deviceDataCollectionJWT: "",
-        deviceDataCollectionURL: "https://centinelapistag.cardinalcommerce.com/V1/Cruise/Collect",
+        deviceDataCollectionURL: "",
         street_1: "St 12",
         street_2: "",
         city: "Islamabad",
@@ -17,26 +17,13 @@ export default function RootLayout() {
         country: "PK"
     });
 
-    const router = useRouter();
-
-    React.useEffect(() => {
-        if (!values.clientSecret || !values.tracker || !values.deviceDataCollectionJWT || !values.deviceDataCollectionURL || !values.street_1 || !values.city || !values.postal_code || !values.country) {
-            return;
-        }
-        router.push("/authorization");
-    }, [values]);
-
     return (
         <SafepayContext.Provider value={{ ...values, setValues }}>
             <Stack>
                 <Stack.Screen
                     name="index"
-                />
-                <Stack.Screen
-                    name="authorization"
                     options={{
-                        presentation: "modal",
-                        animation: "slide_from_bottom"
+                        title: "Safepay Card Capture"
                     }}
                 />
             </Stack>
