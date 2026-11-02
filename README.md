@@ -51,12 +51,7 @@ Both start Metro in dev-client mode. `npm run ios` also opens the simulator. `np
 
 ## Android (dev client)
 
-The Android build fetches Cardinal Commerce artifacts. Export credentials before building:
-
-```bash
-export CARDINAL_USERNAME="your-username"
-export CARDINAL_PASSWORD="your-password"
-```
+The example uses the Android SDK's `safePayCard` module, which doesn't depend on the Cardinal Mobile SDK, so no Cardinal credentials are needed.
 
 Build and install:
 

@@ -24,8 +24,6 @@ buildscript {
 apply plugin: "com.facebook.react.rootproject"
 
 allprojects {
-    def cardinalUser = (findProperty('CARDINAL_USERNAME') ?: System.getenv('CARDINAL_USERNAME'))?.toString()
-    def cardinalPass = (findProperty('CARDINAL_PASSWORD') ?: System.getenv('CARDINAL_PASSWORD'))?.toString()
     repositories {
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
@@ -39,12 +37,5 @@ allprojects {
         google()
         mavenCentral()
         maven { url 'https://www.jitpack.io' }
-        maven {
-            url 'https://cardinalcommerceprod.jfrog.io/artifactory/android'
-            credentials {
-                username = cardinalUser ?: ''
-                password = cardinalPass ?: ''
-            }
-        }
     }
 }
