@@ -30,9 +30,6 @@ dependencyResolutionManagement {
     maven { url = uri("https://jitpack.io") }
   }
   versionCatalogs {
-    libs {
-      from(files(new File(rootDir, '../../safepay-android-sdk-getsafepay/gradle/libs.versions.toml')))
-    }
     reactAndroidLibs {
       from(files(new File(["node", "--print", "require.resolve('react-native/package.json')"].execute(null, rootDir).text.trim(), "../gradle/libs.versions.toml")))
     }
