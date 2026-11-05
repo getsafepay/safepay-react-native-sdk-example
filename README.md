@@ -1,50 +1,94 @@
-# Welcome to your Expo app 👋
+# Safepay React Native SDK Example
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This app exercises `@sfpy/react-native`, including the native card capture field. It is an Expo **development build** app (Expo Go will not work).
 
-## Get started
+## Prereqs
 
-1. Install dependencies
+- Node + npm
+- Xcode + CocoaPods (iOS)
+- Android SDK + an emulator
+- Sibling repos expected by native modules:
+  - `../safepay-ios-sdk-getsafepay` (used by `ios/Podfile`)
+  - `../safepay-android-sdk-getsafepay` (used by `android/settings.gradle`)
 
-   ```bash
-   npm install
-   ```
+If your folder names differ, update:
+- `ios/Podfile` for the iOS SDK path
+- `android/settings.gradle` for the Android SDK path
 
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Install
 
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Convenience scripts:
 
-## Learn more
+```bash
+npm run ios
+npm run android
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+Both start Metro in dev-client mode. `npm run ios` also opens the simulator. `npm run android` does not auto-open an emulator because Expo CLI's Android device resolution is brittle when stale offline emulators are present.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## iOS (dev client)
 
-## Join the community
+1. Install pods:
+   ```bash
+   cd ios
+   pod install
+   ```
 
-Join our community of developers creating universal apps.
+2. Build the dev client:
+   ```bash
+   cd ..
+   npx expo run:ios
+   ```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+3. Start Metro and open the app:
+   ```bash
+   npm run ios
+   ```
+
+## Android (dev client)
+
+The example uses the Android SDK's `safePayCard` module, which doesn't depend on the Cardinal Mobile SDK, so no Cardinal credentials are needed.
+
+Build and install:
+
+```bash
+npx expo run:android
+```
+
+Or, if you already built once and just need to reinstall:
+
+```bash
+cd android
+./gradlew installDebug
+```
+
+Then start Metro:
+
+```bash
+cd ..
+npm run android
+```
+
+Then launch the installed app on the emulator.
+
+## Using the app
+
+The app is a single checkout form:
+
+1. **Session**: paste a time-based token (TBT) and a payment tracker created on your server, and pick the environment they were created in. Nothing is hard-coded; the app doesn't create trackers itself.
+2. **Billing address**: prefilled with a sample address; edit as needed.
+3. **Card**: enter a test card into the native card field and tap **Pay**. Card details are handled in native code; the app only sees the brand, last four digits and validation state.
+4. **3-D Secure** runs in a modal, and the outcome appears under **Result**.
+
+See the [`@sfpy/react-native` README](https://github.com/getsafepay/sfpy-react-native#accepting-a-card-payment) for the integration this demonstrates.
+
+## Common issues
+
+- **Black screen / “Unable to load script”**: Metro is not running or the app can’t reach it. Start Metro with `npx expo start --dev-client` and relaunch the app.
+- **Android install hangs**: Restart adb and the emulator, then re-run `./gradlew installDebug`.
+- **Pay fails with an authorization error**: the environment doesn't match the one the tracker and TBT were created in, or the TBT has expired. Create a fresh tracker and TBT.
+- **Expo Go / `bubblingEventTypes of null`**: this app uses custom native views. Use the dev client only; Expo Go will not work.
